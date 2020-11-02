@@ -4,6 +4,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
     public List<User> getAllUsers();
@@ -11,6 +12,5 @@ public interface UserService extends UserDetailsService {
     public User createNewUser (User user);
     public User updateUser (User user, String id);
     public User deleteUser(String id);
-
-    User findByEmail(String email);
+    public User findByEmail(String email);
 }

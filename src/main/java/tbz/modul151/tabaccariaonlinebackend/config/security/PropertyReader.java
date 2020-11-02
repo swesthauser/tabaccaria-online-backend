@@ -18,7 +18,6 @@ public class PropertyReader {
     }
 
     public String getStringProperty(String propName){
-        String propVal = properties.getProperty(propName);
-        return propVal;
+        return properties.getProperty(propName);
     }
 }

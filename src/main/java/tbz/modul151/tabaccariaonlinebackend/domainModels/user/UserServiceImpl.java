@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
         userRepository.save(user);
         return user;
     }
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+        return userRepository.findByEmail(email);
     }
 
     private User findAllThrow (Optional<User> optional) throws NoSuchElementException {

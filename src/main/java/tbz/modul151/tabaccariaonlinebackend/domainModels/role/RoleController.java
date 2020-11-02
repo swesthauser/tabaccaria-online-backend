@@ -36,7 +36,7 @@ public class RoleController {
 
     //POST
     @PostMapping("")
-    //@PreAuthorize("hasAuthority('CREATE_ROLE')")
+    @PreAuthorize("hasAuthority('CREATE_ROLE')")
     public @ResponseBody
     ResponseEntity<Role> create(@RequestBody Role role) {
         return new ResponseEntity<Role>(roleService.createNewRole(role), HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class RoleController {
 
     //DELETE
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('DELETE_UROLE')")
+    @PreAuthorize("hasAuthority('DELETE_ROLE')")
     public @ResponseBody
     ResponseEntity<Role> delete(@PathVariable String id){
         return new ResponseEntity<Role>(roleService.deleteRole(id), HttpStatus.NO_CONTENT);

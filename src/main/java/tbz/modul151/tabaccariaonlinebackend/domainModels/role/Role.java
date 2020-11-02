@@ -32,8 +32,8 @@ public class Role  {
     )
     private Set<Authority> authorities;
 
+
     public Role() {
-        super();
     }
 
     public String getName() {
@@ -52,6 +52,14 @@ public class Role  {
     public Role setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
         return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
 

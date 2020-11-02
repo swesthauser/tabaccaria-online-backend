@@ -1,9 +1,10 @@
-package tbz.modul151.tabaccariaonlinebackend.domainModels.authority;
+package tbz.modul151.tabaccariaonlinebackend.domainModels.category;
+
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authorities")
-public class AuthorityController {
+@RequestMapping("/categories")
+public class CategoryController {
 }
