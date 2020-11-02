@@ -4,8 +4,10 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.category;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -23,6 +25,9 @@ public class Category {
 
     @Column(name = "category_description")
     private String categoryDescription;
+
+    @OneToMany(mappedBy="category")
+    private Set<Article> articles;
 
     public Category(){}
 
@@ -48,5 +53,13 @@ public class Category {
 
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 }

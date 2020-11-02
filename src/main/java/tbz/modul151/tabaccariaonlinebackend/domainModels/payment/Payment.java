@@ -4,8 +4,10 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.payment;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "payment")
@@ -23,6 +25,9 @@ public class Payment {
 
     @Column(name = "is_allowed")
     private Boolean isAllowed;
+
+    @OneToMany(mappedBy="payment")
+    private Set<Order> orders;
 
     public Payment (){}
 
@@ -48,5 +53,13 @@ public class Payment {
 
     public void setAllowed(Boolean allowed) {
         isAllowed = allowed;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

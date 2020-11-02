@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class OrderDetailsServiceImpl implements OrderDetailsService{
@@ -15,28 +17,37 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
         this.orderDetailsRepository = orderDetailsRepository;
     }
 
+    private OrderDetails findAllThrow (Optional<OrderDetails> optional) throws NoSuchElementException {
+        if(optional.isPresent()){
+            return optional.get();
+        } else throw new NoSuchElementException("No value present");
+    }
+
     @Override
     public List<OrderDetails> getAllOrderDetails() {
-        return null;
+        return orderDetailsRepository.findAll();
     }
 
     @Override
     public OrderDetails getOrderDetailsById(String id) {
-        return null;
+        return findAllThrow(orderDetailsRepository.findById(id));
     }
 
     @Override
     public OrderDetails createNewOrderDetails(OrderDetails orderDetails) {
-        return null;
+        return orderDetailsRepository.save(orderDetails);
     }
 
     @Override
     public OrderDetails updateOrderDetails(OrderDetails orderDetails, String id) {
-        return null;
+        findAllThrow(orderDetailsRepository.findById(id));
+        orderDetails.setId(id);
+        return orderDetailsRepository.save(orderDetails);
     }
 
     @Override
     public OrderDetails deleteOrderDetails(String id) {
+        orderDetailsRepository.deleteById(id);
         return null;
     }
 }

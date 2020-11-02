@@ -4,9 +4,12 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.article;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.category.Category;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails.OrderDetails;
 
 import javax.persistence.*;
+import javax.xml.catalog.CatalogException;
+import java.util.Set;
 
 @Entity
 @Table(name = "article")
@@ -37,9 +40,12 @@ public class Article {
     @Column(name = "available_size")
     private String availableSize;
 
+    @OneToMany(mappedBy = "article")
+    private Set<OrderDetails> orderDetailsSet;
+
     @ManyToOne
-    @JoinColumn(name="order_details_id", nullable=false)
-    private OrderDetails orderDetails;
+    @JoinColumn(name="category_id", nullable=false)
+    private Category category;
 
     //category
 
@@ -99,5 +105,21 @@ public class Article {
 
     public void setAvailableSize(String availableSize) {
         this.availableSize = availableSize;
+    }
+
+    public Set<OrderDetails> getOrderDetailsSet() {
+        return orderDetailsSet;
+    }
+
+    public void setOrderDetailsSet(Set<OrderDetails> orderDetailsSet) {
+        this.orderDetailsSet = orderDetailsSet;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

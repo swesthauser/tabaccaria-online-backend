@@ -4,13 +4,16 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails.OrderDetails;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.payment.Payment;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -20,9 +23,13 @@ public class Order {
     @Column(name = "id")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
+    private Payment payment;
 
     @Column(name = "order_number")
     private String orderNumber;
@@ -44,6 +51,9 @@ public class Order {
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
+
+    @OneToMany(mappedBy = "order")
+    private Set<OrderDetails> orderDetailsSet;
 
     public Order(){
         this.timestamp = LocalDate.now();
@@ -119,5 +129,21 @@ public class Order {
 
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Set<OrderDetails> getOrderDetailsSet() {
+        return orderDetailsSet;
+    }
+
+    public void setOrderDetailsSet(Set<OrderDetails> orderDetailsSet) {
+        this.orderDetailsSet = orderDetailsSet;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

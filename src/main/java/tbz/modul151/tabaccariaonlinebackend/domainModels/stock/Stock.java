@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "stock")
@@ -22,9 +23,15 @@ public class Stock {
     @Column(name = "quantity")
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "article_id", referencedColumnName = "id")
-    private Article article;
+    /*
+    @ManyToOne
+    @JoinColumn(name="stock_id", nullable=false)
+    private Stock stock;
+
+    @OneToMany(mappedBy="stock")
+    private Set<Article> articles;
+
+     */
 
     public Stock (){}
 
@@ -44,11 +51,4 @@ public class Stock {
         this.quantity = quantity;
     }
 
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
 }

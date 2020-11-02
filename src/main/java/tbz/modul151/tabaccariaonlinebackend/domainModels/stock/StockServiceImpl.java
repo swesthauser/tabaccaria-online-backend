@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class StockServiceImpl implements StockService{
@@ -16,28 +18,37 @@ public class StockServiceImpl implements StockService{
         this.stockRepository = stockRepository;
     }
 
+    private Stock findAllThrow (Optional<Stock> optional) throws NoSuchElementException {
+        if(optional.isPresent()){
+            return optional.get();
+        } else throw new NoSuchElementException("No value present");
+    }
+
     @Override
     public List<Stock> getAllStock() {
-        return null;
+        return stockRepository.findAll();
     }
 
     @Override
     public Stock getStockById(String id) {
-        return null;
+        return findAllThrow(stockRepository.findById(id));
     }
 
     @Override
     public Stock createNewStock(Stock stock) {
-        return null;
+        return stockRepository.save(stock);
     }
 
     @Override
     public Stock updateStock(Stock stock, String id) {
-        return null;
+        findAllThrow(stockRepository.findById(id));
+        stock.setId(id);
+        return stockRepository.save(stock);
     }
 
     @Override
     public Stock deleteStock(String id) {
+        stockRepository.deleteById(id);
         return null;
     }
 }

@@ -1,11 +1,13 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 
 import org.hibernate.annotations.*;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.role.Role;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Set;
@@ -74,6 +76,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy="user")
+    private Set<Order> orders;
 
     // Standard empty constructor
     public User() {

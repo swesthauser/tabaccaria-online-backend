@@ -5,6 +5,7 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -38,8 +39,13 @@ public class OrderDetails {
     @Column(name = "total")
     private double total;
 
-    @OneToMany(mappedBy="order_details")
-    private Set<Article> articles;
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     public OrderDetails(){}
 
@@ -99,11 +105,20 @@ public class OrderDetails {
         this.total = total;
     }
 
-    public Set<Article> getArticles() {
-        return articles;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
+    public void setArticle(Article article) {
+        this.article = article;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
 }
