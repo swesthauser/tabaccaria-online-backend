@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,10 +24,12 @@ public class Order {
     @Column(name = "id")
     private String id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
     private Payment payment;
@@ -52,7 +55,8 @@ public class Order {
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
-    @OneToMany(mappedBy = "order")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private Set<OrderDetails> orderDetailsSet;
 
     public Order(){

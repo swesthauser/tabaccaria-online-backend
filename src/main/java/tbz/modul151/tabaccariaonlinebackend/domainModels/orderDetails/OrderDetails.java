@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,10 +40,12 @@ public class OrderDetails {
     @Column(name = "total")
     private double total;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

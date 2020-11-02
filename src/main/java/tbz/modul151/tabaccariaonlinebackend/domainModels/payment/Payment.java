@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.payment;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,7 +27,8 @@ public class Payment {
     @Column(name = "is_allowed")
     private Boolean isAllowed;
 
-    @OneToMany(mappedBy="payment")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="payment")
     private Set<Order> orders;
 
     public Payment (){}

@@ -1,6 +1,8 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.article;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -40,11 +42,13 @@ public class Article {
     @Column(name = "available_size")
     private String availableSize;
 
-    @OneToMany(mappedBy = "article")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "article")
     private Set<OrderDetails> orderDetailsSet;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="category_id", nullable=false)
+    @JoinColumn(name="category_id")
     private Category category;
 
     //category

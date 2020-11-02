@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.category;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,7 +27,8 @@ public class Category {
     @Column(name = "category_description")
     private String categoryDescription;
 
-    @OneToMany(mappedBy="category")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="category")
     private Set<Article> articles;
 
     public Category(){}

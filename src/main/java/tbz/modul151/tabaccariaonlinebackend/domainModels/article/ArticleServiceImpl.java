@@ -50,4 +50,9 @@ public class ArticleServiceImpl implements ArticleService{
         articleRepository.deleteById(id);
         return null;
     }
+
+    @Override
+    public List<Article> findByCategoryId(String id) {
+        return articleRepository.findByCategoryId(id);
+    }
 }

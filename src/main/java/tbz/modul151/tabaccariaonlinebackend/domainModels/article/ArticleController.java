@@ -35,6 +35,14 @@ public class ArticleController {
         return new ResponseEntity<Article>(articleService.getArticleById(id), HttpStatus.OK);
     }
 
+    //GET by CategoryId
+    @GetMapping("/category/{id}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ARTICLE')")
+    public @ResponseBody
+    ResponseEntity<List<Article>>  getByCategoryId(@PathVariable String id){
+        return new ResponseEntity<List<Article>>(articleService.findByCategoryId(id), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ARTICLE')")
