@@ -1,11 +1,20 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.article;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
+
+    private ArticleRepository articleRepository;
+
+    @Autowired
+    public ArticleServiceImpl(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
+
     @Override
     public List<Article> getAllArticles() {
         return null;

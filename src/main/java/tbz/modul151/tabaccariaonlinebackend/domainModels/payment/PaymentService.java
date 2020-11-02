@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface PaymentService {
 
-    public List<Payment> getAllOrderDetails();
-    public Payment getOrderDetailsById(String id);
-    public Payment createNewOrderDetails(Payment payment);
-    public Payment updateOrderDetails (Payment payment, String id);
-    public Payment deleteOrderDetails(String id);
+    public List<Payment> getAllPayments();
+    public Payment getPaymentById(String id);
+    public Payment createNewPayment(Payment payment);
+    public Payment updatePayment (Payment payment, String id);
+    public Payment deletePayment(String id);
 }
