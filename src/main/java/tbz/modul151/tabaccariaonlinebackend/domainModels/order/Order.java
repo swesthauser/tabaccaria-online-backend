@@ -4,6 +4,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,6 +19,10 @@ public class Order {
     @Generated(GenerationTime.ALWAYS)
     @Column(name = "id")
     private String id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(name = "order_number")
     private String orderNumber;
@@ -50,6 +55,14 @@ public class Order {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getOrderNumber() {

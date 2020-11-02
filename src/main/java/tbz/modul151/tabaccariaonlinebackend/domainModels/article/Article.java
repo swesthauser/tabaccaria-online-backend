@@ -4,6 +4,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.article;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails.OrderDetails;
 
 import javax.persistence.*;
 
@@ -35,6 +36,10 @@ public class Article {
 
     @Column(name = "available_size")
     private String availableSize;
+
+    @ManyToOne
+    @JoinColumn(name="order_details_id", nullable=false)
+    private OrderDetails orderDetails;
 
     //category
 
