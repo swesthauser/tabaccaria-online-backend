@@ -12,4 +12,5 @@ public interface ArticleService {
     public Article updateArticle (Article article, String id);
     public Article deleteArticle(String id);
     public List<Article> findByCategoryId(String id);
+    List<Article> findByUserId(String id);
 }

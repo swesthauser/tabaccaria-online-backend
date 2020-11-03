@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.category.Category;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails.OrderDetails;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.user.User;
 
 import javax.persistence.*;
 import javax.xml.catalog.CatalogException;
@@ -50,6 +51,7 @@ public class Article {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
 
     //category
 
@@ -126,4 +128,5 @@ public class Article {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }

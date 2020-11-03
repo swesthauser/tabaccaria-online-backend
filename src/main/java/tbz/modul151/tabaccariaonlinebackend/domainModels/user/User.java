@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 
 import org.hibernate.annotations.*;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.role.Role;
 
@@ -76,6 +77,15 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinTable(
+            name = "users_articles",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id")
+    )
+    private Set<Article> articles;
 
     @OneToMany(mappedBy="user")
     private Set<Order> orders;
@@ -200,5 +210,21 @@ public class User {
 
     public void setPlz(String plz) {
         this.plz = plz;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

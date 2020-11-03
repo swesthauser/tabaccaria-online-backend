@@ -3,6 +3,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -54,5 +55,15 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public List<Article> findByCategoryId(String id) {
         return articleRepository.findByCategoryId(id);
+    }
+
+    @Override
+    public List<Article> findByUserId(String userId) {
+        List<String> articleIds = articleRepository.findByUserId(userId);
+        List<Article> articles = new ArrayList<>();
+        for (String id : articleIds) {
+            articles.add(getArticleById(id));
+        }
+        return articles;
     }
 }

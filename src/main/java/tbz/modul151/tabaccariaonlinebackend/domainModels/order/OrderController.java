@@ -36,6 +36,14 @@ public class OrderController {
         return new ResponseEntity<Order>(orderService.getOrderById(id), HttpStatus.OK);
     }
 
+    //GET Shopping Cart
+    @GetMapping("/cart/{userId}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ORDER')")
+    public @ResponseBody
+    ResponseEntity<Order> getShoppingCart(@PathVariable String userId){
+        return new ResponseEntity<Order>(orderService.getShoppingCartByUserId(userId), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ORDER')")
@@ -50,6 +58,14 @@ public class OrderController {
     public @ResponseBody
     ResponseEntity<Order> update(@RequestBody Order order, @PathVariable String id){
         return new ResponseEntity<Order>(orderService.updateOrder(order, id), HttpStatus.OK);
+    }
+
+    //PUT
+    @PutMapping("/confirme/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_ORDER')")
+    public @ResponseBody
+    ResponseEntity<Order> closeOrder(@RequestBody Order order, @PathVariable String id){
+        return new ResponseEntity<Order>(orderService.confirmeOrder(order, id), HttpStatus.OK);
     }
 
     //DELETE

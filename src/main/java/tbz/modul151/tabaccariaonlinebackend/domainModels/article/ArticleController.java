@@ -43,6 +43,14 @@ public class ArticleController {
         return new ResponseEntity<List<Article>>(articleService.findByCategoryId(id), HttpStatus.OK);
     }
 
+    //GET by UserId
+    @GetMapping("/user/{id}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ARTICLE')")
+    public @ResponseBody
+    ResponseEntity<List<Article>>  getByUserId(@PathVariable String id){
+        return new ResponseEntity<List<Article>>(articleService.findByUserId(id), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ARTICLE')")

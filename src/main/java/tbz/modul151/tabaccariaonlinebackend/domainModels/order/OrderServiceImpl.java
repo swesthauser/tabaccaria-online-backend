@@ -3,6 +3,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -34,8 +35,11 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order createNewOrder(Order order) {
-        return orderRepository.save(order);
+    public Order createNewOrder(Order order) throws IllegalArgumentException {
+        String id = order.getId();
+        if (getOrderById(id) == null){
+            return orderRepository.save(order);
+        } else throw new IllegalArgumentException("Open order already");
     }
 
     @Override
@@ -49,5 +53,18 @@ public class OrderServiceImpl implements OrderService{
     public Order deleteOrder(String id) {
         orderRepository.deleteById(id);
         return null;
+    }
+
+    @Override
+    public Order getShoppingCartByUserId(String userId) {
+        return orderRepository.findByOrderDateIsNullAndUserId(userId);
+    }
+
+    @Override
+    public Order confirmeOrder(Order order, String id) {
+        findAllThrow(orderRepository.findById(id));
+        order.setOrderDate(LocalDate.now());
+        order.setId(id);
+        return orderRepository.save(order);
     }
 }
