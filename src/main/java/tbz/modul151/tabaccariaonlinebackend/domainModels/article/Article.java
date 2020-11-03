@@ -43,11 +43,11 @@ public class Article {
     @Column(name = "available_size")
     private String availableSize;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="orderdetails-article")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "article")
     private Set<OrderDetails> orderDetailsSet;
 
-    @JsonBackReference
+    @JsonBackReference(value="article-category")
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;

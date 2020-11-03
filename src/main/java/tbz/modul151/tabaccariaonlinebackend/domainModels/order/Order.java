@@ -24,12 +24,12 @@ public class Order {
     @Column(name = "id")
     private String id;
 
-    @JsonBackReference
+    @JsonBackReference(value="user-order")
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @JsonBackReference
+    @JsonBackReference(value="payment-order")
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
     private Payment payment;
@@ -55,7 +55,7 @@ public class Order {
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="order-orderdetails")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private Set<OrderDetails> orderDetailsSet;
 

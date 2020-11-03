@@ -40,12 +40,12 @@ public class OrderDetails {
     @Column(name = "total")
     private double total;
 
-    @JsonBackReference
+    @JsonBackReference(value="orderdetails-article")
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
-    @JsonBackReference
+    @JsonBackReference(value="order-orderdetails")
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;

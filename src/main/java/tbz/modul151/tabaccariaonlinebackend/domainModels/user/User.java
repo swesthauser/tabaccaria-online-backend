@@ -1,5 +1,6 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
@@ -87,15 +88,19 @@ public class User {
     )
     private Set<Article> articles;
 
+    @JsonManagedReference(value="user-order")
     @OneToMany(mappedBy="user")
     private Set<Order> orders;
 
     // Standard empty constructor
     public User() {
+        /*
         this.accountExpirationDate = LocalDate.now().plusYears(2);
         this.credentialsExpirationDate = LocalDate.now().plusYears(2);
         this.locked = false;
         this.enabled = true;
+
+         */
     }
 
     // Getters and Setters

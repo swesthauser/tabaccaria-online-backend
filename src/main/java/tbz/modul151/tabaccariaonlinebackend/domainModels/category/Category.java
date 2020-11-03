@@ -27,7 +27,7 @@ public class Category {
     @Column(name = "category_description")
     private String categoryDescription;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="article-category")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="category")
     private Set<Article> articles;
 

@@ -27,7 +27,7 @@ public class Payment {
     @Column(name = "is_allowed")
     private Boolean isAllowed;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="payment-order")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="payment")
     private Set<Order> orders;
 
