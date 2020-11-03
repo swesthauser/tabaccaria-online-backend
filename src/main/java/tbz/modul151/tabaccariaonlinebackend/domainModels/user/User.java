@@ -94,13 +94,10 @@ public class User {
 
     // Standard empty constructor
     public User() {
-        /*
         this.accountExpirationDate = LocalDate.now().plusYears(2);
         this.credentialsExpirationDate = LocalDate.now().plusYears(2);
         this.locked = false;
         this.enabled = true;
-
-         */
     }
 
     // Getters and Setters
