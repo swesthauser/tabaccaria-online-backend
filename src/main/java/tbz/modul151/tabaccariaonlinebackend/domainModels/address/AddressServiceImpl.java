@@ -18,28 +18,37 @@ public class AddressServiceImpl implements AddressService{
         this.addressRepository = addressRepository;
     }
 
+    private Address findAllThrow (Optional<Address> optional) throws NoSuchElementException {
+        if(optional.isPresent()){
+            return optional.get();
+        } else throw new NoSuchElementException("No value present");
+    }
+
     @Override
     public List<Address> getAll() {
-        return null;
+        return addressRepository.findAll();
     }
 
     @Override
     public Address getById(String id) {
-        return null;
+        return findAllThrow(addressRepository.findById(id));
     }
 
     @Override
     public Address updateById(String id, Address objToUpdate) {
-        return null;
+        findAllThrow(addressRepository.findById(id));
+        objToUpdate.setId(id);
+        return addressRepository.save(objToUpdate);
     }
 
     @Override
     public Address create(Address object) {
-        return null;
+        return addressRepository.save(object);
     }
 
     @Override
     public Address delete(String id) {
+        addressRepository.deleteById(id);
         return null;
     }
 }

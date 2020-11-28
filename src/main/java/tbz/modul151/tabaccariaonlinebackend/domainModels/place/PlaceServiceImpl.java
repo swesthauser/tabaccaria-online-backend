@@ -18,14 +18,21 @@ public class PlaceServiceImpl implements PlaceService{
         this.placeRepository = placeRepository;
     }
 
+
+    private Place findAllThrow (Optional<Place> optional) throws NoSuchElementException {
+        if(optional.isPresent()){
+            return optional.get();
+        } else throw new NoSuchElementException("No value present");
+    }
+
     @Override
     public List<Place> getAll() {
-        return null;
+        return placeRepository.findAll();
     }
 
     @Override
     public Place getById(String id) {
-        return null;
+        return findAllThrow(placeRepository.findById(id));
     }
 
     @Override
@@ -35,11 +42,12 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public Place create(Place object) {
-        return null;
+        return placeRepository.save(object);
     }
 
     @Override
     public Place delete(String id) {
+        placeRepository.deleteById(id);
         return null;
     }
 }

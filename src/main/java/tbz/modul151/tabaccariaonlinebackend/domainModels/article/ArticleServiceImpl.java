@@ -59,11 +59,6 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public List<Article> findByUserId(String userId) {
-        List<String> articleIds = articleRepository.findByUserId(userId);
-        List<Article> articles = new ArrayList<>();
-        for (String id : articleIds) {
-            articles.add(getArticleById(id));
-        }
-        return articles;
+        return articleRepository.findByUserId(userId);
     }
 }

@@ -18,28 +18,37 @@ public class PaymentTypeServiceImpl implements PaymentTypeService{
         this.paymentTypeRepository = paymentTypeRepository;
     }
 
+    private PaymentType findAllThrow (Optional<PaymentType> optional) throws NoSuchElementException {
+        if(optional.isPresent()){
+            return optional.get();
+        } else throw new NoSuchElementException("No value present");
+    }
+
     @Override
     public List<PaymentType> getAll() {
-        return null;
+        return paymentTypeRepository.findAll();
     }
 
     @Override
     public PaymentType getById(String id) {
-        return null;
+        return findAllThrow(paymentTypeRepository.findById(id));
     }
 
     @Override
     public PaymentType updateById(String id, PaymentType objToUpdate) {
-        return null;
+        findAllThrow(paymentTypeRepository.findById(id));
+        objToUpdate.setId(id);
+        return paymentTypeRepository.save(objToUpdate);
     }
 
     @Override
     public PaymentType create(PaymentType object) {
-        return null;
+        return paymentTypeRepository.save(object);
     }
 
     @Override
     public PaymentType delete(String id) {
+        paymentTypeRepository.deleteById(id);
         return null;
     }
 }
