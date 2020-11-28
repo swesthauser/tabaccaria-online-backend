@@ -22,30 +22,15 @@ public class OrderDetails {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "price")
-    private double price;
-
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "discount")
-    private int discount;
+    //@JsonBackReference(value="orderdetails-article")
+    //@ManyToOne
+    @JoinColumn(name = "article_id", referencedColumnName = "id")
+    private String articleId;
 
-    @Column(name = "size")
-    private String size;
-
-    @Column(name = "color")
-    private String color;
-
-    @Column(name = "total")
-    private double total;
-
-    @JsonBackReference(value="orderdetails-article")
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
-
-    @JsonBackReference(value="order-orderdetails")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -60,14 +45,6 @@ public class OrderDetails {
         this.id = id;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -76,44 +53,12 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
-    public int getDiscount() {
-        return discount;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 
     public Order getOrder() {
@@ -123,5 +68,26 @@ public class OrderDetails {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    /*
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+     */
 
 }

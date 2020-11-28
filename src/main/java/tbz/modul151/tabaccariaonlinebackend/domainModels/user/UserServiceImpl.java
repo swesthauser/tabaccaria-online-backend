@@ -5,20 +5,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.article.ArticleRepository;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserRepository userRepository;
+    private ArticleRepository articleRepository;
 
     @Autowired
-    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, ArticleRepository articleRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
+        this.articleRepository = articleRepository;
     }
 
     @Override
@@ -56,6 +62,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void addArticleToFavorites(String userId, String articleId, User userToUpdate) {
+        Optional<Article> articleToAdd = articleRepository.findById(articleId);
+        Optional<User> optionalUser = userRepository.findById(userToUpdate.getId());
+        if(articleToAdd != null && optionalUser != null){
+            optionalUser.get().getArticles().add(articleToAdd.get());
+            List<Article> newList = optionalUser.get().getArticles().stream().distinct().collect(Collectors.toList());
+            optionalUser.get().setArticles(newList);
+            updateUser(optionalUser.get(), userId);
+        }
+
     }
 
     private User findAllThrow (Optional<User> optional) throws NoSuchElementException {

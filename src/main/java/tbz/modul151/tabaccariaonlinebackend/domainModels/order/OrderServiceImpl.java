@@ -2,6 +2,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails.OrderDetails;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,11 +36,17 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order createNewOrder(Order order) throws IllegalArgumentException {
-        String id = order.getId();
-        if (getOrderById(id) == null){
+    public Order createNewOrder(Order order) {
+        return orderRepository.save(order);
+        /*
+        Optional<Order> optionalOrder = orderRepository.findById(order.getId());
+        if (optionalOrder.isPresent()){
+            return updateOrder(order, optionalOrder.get().getId());
+        } else {
             return orderRepository.save(order);
-        } else throw new IllegalArgumentException("Open order already");
+        }
+
+         */
     }
 
     @Override
@@ -66,5 +73,10 @@ public class OrderServiceImpl implements OrderService{
         order.setOrderDate(LocalDate.now());
         order.setId(id);
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderDetails> getAllOrderDetails(String orderId) {
+        return null;
     }
 }

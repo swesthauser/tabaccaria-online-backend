@@ -1,17 +1,15 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
-import tbz.modul151.tabaccariaonlinebackend.domainModels.order.Order;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.role.Role;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 
@@ -42,15 +40,6 @@ public class User {
     @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(name = "street", nullable = false)
-    private String street;
-
-    @Column(name = "city", nullable = false)
-    private String city;
-
-    @Column(name = "plz", nullable = false)
-    private String plz;
-
     @Column(name = "account_expiration_date")
     private LocalDate accountExpirationDate;
 
@@ -70,27 +59,36 @@ public class User {
 
     */
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private String addressId;
+
+    @JoinColumn(name = "place_id", referencedColumnName = "id")
+    private String placeId;
+
+    @JsonIgnore
+    @ManyToMany
     @JoinTable(
-            name = "users_role",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    @ManyToMany
     @JoinTable(
             name = "users_articles",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "article_id")
+            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id")
     )
-    private Set<Article> articles;
+    private List<Article> articles;
 
+    /*
     @JsonManagedReference(value="user-order")
     @OneToMany(mappedBy="user")
-    private Set<Order> orders;
+    private List<Order> orders;
+
+     */
 
     // Standard empty constructor
     public User() {
@@ -190,38 +188,31 @@ public class User {
         this.roles = roles;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
-    public String getCity() {
-        return city;
+    public String getPlaceId() {
+        return placeId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
-    public String getPlz() {
-        return plz;
-    }
-
-    public void setPlz(String plz) {
-        this.plz = plz;
-    }
-
-    public Set<Article> getArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(Set<Article> articles) {
+    public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
 
+    /*
     public Set<Order> getOrders() {
         return orders;
     }
@@ -229,4 +220,6 @@ public class User {
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
+
+     */
 }

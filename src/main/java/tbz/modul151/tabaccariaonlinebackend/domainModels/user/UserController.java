@@ -51,6 +51,15 @@ public class UserController {
         return new ResponseEntity<User>(userService.updateUser(user, id), HttpStatus.OK);
     }
 
+    //PUT
+    @PutMapping("/{id}/articles/{articleId}")
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
+    public @ResponseBody
+    ResponseEntity<?> addArticleToFav(@RequestBody User user, @PathVariable String id, @PathVariable String articleId){
+        userService.addArticleToFavorites(id, articleId, user);
+        return new ResponseEntity(user, HttpStatus.OK);
+    }
+
     //DELETE
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE_USER')")

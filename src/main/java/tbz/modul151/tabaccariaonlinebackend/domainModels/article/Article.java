@@ -34,20 +34,15 @@ public class Article {
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "price", nullable = false)
+    private double price;
+
+    @Column(name = "sale_price")
+    private double salePrice;
+
     @Column(name = "is_available")
     private Boolean available;
 
-    @Column(name = "available_colors")
-    private String availableColors;
-
-    @Column(name = "available_size")
-    private String availableSize;
-
-    @JsonManagedReference(value="orderdetails-article")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "article")
-    private Set<OrderDetails> orderDetailsSet;
-
-    @JsonBackReference(value="article-category")
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
@@ -97,30 +92,6 @@ public class Article {
         this.available = available;
     }
 
-    public String getAvailableColors() {
-        return availableColors;
-    }
-
-    public void setAvailableColors(String availableColors) {
-        this.availableColors = availableColors;
-    }
-
-    public String getAvailableSize() {
-        return availableSize;
-    }
-
-    public void setAvailableSize(String availableSize) {
-        this.availableSize = availableSize;
-    }
-
-    public Set<OrderDetails> getOrderDetailsSet() {
-        return orderDetailsSet;
-    }
-
-    public void setOrderDetailsSet(Set<OrderDetails> orderDetailsSet) {
-        this.orderDetailsSet = orderDetailsSet;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -129,4 +100,19 @@ public class Article {
         this.category = category;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
 }

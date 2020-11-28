@@ -37,6 +37,14 @@ public class OrderDetailsController {
         return new ResponseEntity<OrderDetails>(orderDetailsService.getOrderDetailsById(id), HttpStatus.OK);
     }
 
+    //GET by orderId
+    @GetMapping("/order/{orderId}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ORDER_DETAILS')")
+    public @ResponseBody
+    ResponseEntity<List<OrderDetails>>getByOrder(@PathVariable String orderId){
+        return new ResponseEntity<>(orderDetailsService.getAllByOrder(orderId), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ORDER_DETAILS')")

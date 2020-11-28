@@ -1,17 +1,14 @@
-package tbz.modul151.tabaccariaonlinebackend.domainModels.stock;
-
+package tbz.modul151.tabaccariaonlinebackend.domainModels.address;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
-import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "stock")
-public class Stock {
+@Table(name = "address")
+public class Address {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -20,14 +17,15 @@ public class Stock {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "street_number")
+    private String streetNumber;
 
-    @JoinColumn(name="article_id", nullable=false)
-    private String articleId;
+    public Address() {
+    }
 
-
-    public Stock (){}
+    public Address(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
 
     public String getId() {
         return id;
@@ -37,12 +35,11 @@ public class Stock {
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getStreetNumber() {
+        return streetNumber;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
     }
-
 }

@@ -1,6 +1,7 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -11,6 +12,7 @@ import tbz.modul151.tabaccariaonlinebackend.domainModels.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,17 +26,17 @@ public class Order {
     @Column(name = "id")
     private String id;
 
-    @JsonBackReference(value="user-order")
-    @ManyToOne
+   // @JsonBackReference(value="user-order")
+    //@ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    private String userId;
 
     @JsonBackReference(value="payment-order")
     @ManyToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 
-    @Column(name = "order_number")
+    @Column(name = "order_number", nullable = false)
     private String orderNumber;
 
     @Column(name = "order_date")
@@ -55,9 +57,17 @@ public class Order {
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
+    @JsonManagedReference
+    @OneToMany
+    private List<OrderDetails> orderDetailsList;
+
+
+    /*
     @JsonManagedReference(value="order-orderdetails")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private Set<OrderDetails> orderDetailsSet;
+
+     */
 
     public Order(){
         this.timestamp = LocalDate.now();
@@ -71,12 +81,12 @@ public class Order {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getOrderNumber() {
@@ -135,6 +145,15 @@ public class Order {
         this.paymentDate = paymentDate;
     }
 
+    public List<OrderDetails> getOrderDetailsList() {
+        return orderDetailsList;
+    }
+
+    public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
+        this.orderDetailsList = orderDetailsList;
+    }
+
+    /*
     public Set<OrderDetails> getOrderDetailsSet() {
         return orderDetailsSet;
     }
@@ -142,6 +161,8 @@ public class Order {
     public void setOrderDetailsSet(Set<OrderDetails> orderDetailsSet) {
         this.orderDetailsSet = orderDetailsSet;
     }
+
+     */
 
     public Payment getPayment() {
         return payment;

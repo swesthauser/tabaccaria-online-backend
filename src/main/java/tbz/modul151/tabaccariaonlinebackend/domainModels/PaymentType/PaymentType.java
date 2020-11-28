@@ -1,17 +1,14 @@
-package tbz.modul151.tabaccariaonlinebackend.domainModels.stock;
-
+package tbz.modul151.tabaccariaonlinebackend.domainModels.PaymentType;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
-import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "stock")
-public class Stock {
+@Table(name = "payment_type")
+public class PaymentType {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -20,14 +17,15 @@ public class Stock {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "payment_type")
+    private String paymentType;
 
-    @JoinColumn(name="article_id", nullable=false)
-    private String articleId;
+    public PaymentType() {
+    }
 
-
-    public Stock (){}
+    public PaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
 
     public String getId() {
         return id;
@@ -37,12 +35,11 @@ public class Stock {
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
-
 }
