@@ -27,8 +27,12 @@ public class OrderDetails {
 
     //@JsonBackReference(value="orderdetails-article")
     //@ManyToOne
+    //@JoinColumn(name = "article_id", referencedColumnName = "id")
+    //private String articleId;
+
+    @ManyToOne
     @JoinColumn(name = "article_id", referencedColumnName = "id")
-    private String articleId;
+    private Article article;
 
     @JsonBackReference
     @ManyToOne
@@ -53,12 +57,23 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
+    /*
     public String getArticleId() {
         return articleId;
     }
 
     public void setArticleId(String articleId) {
         this.articleId = articleId;
+    }
+
+     */
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public Order getOrder() {
