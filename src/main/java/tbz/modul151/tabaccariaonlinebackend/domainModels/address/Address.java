@@ -11,13 +11,7 @@ import javax.persistence.*;
 public class Address {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Generated(GenerationTime.ALWAYS)
-    @Column(name = "id")
-    private String id;
-
-    @Column(name = "street_number")
+    @Column(name = "street_number", unique = true, nullable = false)
     private String streetNumber;
 
     public Address() {
@@ -25,14 +19,6 @@ public class Address {
 
     public Address(String streetNumber) {
         this.streetNumber = streetNumber;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getStreetNumber() {

@@ -47,7 +47,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user, String id) {
-        findAllThrow(userRepository.findById(id));
+        User oldUser = findAllThrow(userRepository.findById(id));
+        if(!oldUser.getPassword().equals(user.getPassword())){
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
         user.setId(id);
         userRepository.save(user);
         return user;

@@ -44,6 +44,14 @@ public class OrderController {
         return new ResponseEntity<Order>(orderService.getShoppingCartByUserId(userId), HttpStatus.OK);
     }
 
+    //GET all Orders By UserId
+    @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ORDER')")
+    public @ResponseBody
+    ResponseEntity<List<Order>> getAllOrdersByUserId(@PathVariable String userId){
+        return new ResponseEntity<>(orderService.getAllOrdersByUserId(userId), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ORDER')")

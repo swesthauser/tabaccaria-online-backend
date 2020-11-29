@@ -13,5 +13,7 @@ public interface OrderService {
     public Order deleteOrder(String id);
     public Order getShoppingCartByUserId(String userId);
     public Order confirmeOrder(Order order, String id);
-    public List<OrderDetails> getAllOrderDetails(String orderId);
+    public List<Order> getAllOrdersByUserId(String userId);
+   // public List<OrderDetails> getAllOrderDetails(String orderId);
+
 }

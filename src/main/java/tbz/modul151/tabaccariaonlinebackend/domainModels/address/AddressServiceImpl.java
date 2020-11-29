@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService{
     @Override
     public Address updateById(String id, Address objToUpdate) {
         findAllThrow(addressRepository.findById(id));
-        objToUpdate.setId(id);
+        objToUpdate.setStreetNumber(id);
         return addressRepository.save(objToUpdate);
     }
 

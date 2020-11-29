@@ -12,6 +12,9 @@ public class Place {
     @Id
     private String city;
 
+
+    public Place() {}
+
     public Place(String zip, String city) {
         this.zip = zip;
         this.city = city;

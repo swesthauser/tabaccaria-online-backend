@@ -3,6 +3,7 @@ package tbz.modul151.tabaccariaonlinebackend.domainModels.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.place.Place;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.role.Role;
 
 import javax.persistence.*;
@@ -59,11 +60,19 @@ public class User {
 
     */
 
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @JoinColumn(name = "address_id", referencedColumnName = "street_number")
     private String addressId;
 
-    @JoinColumn(name = "place_id", referencedColumnName = "id")
-    private String placeId;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(
+                    name = "zip",
+                    referencedColumnName = "zip"),
+            @JoinColumn(
+                    name = "city",
+                    referencedColumnName = "city")
+    })
+    private Place placeZip;
 
     @JsonIgnore
     @ManyToMany
@@ -196,12 +205,12 @@ public class User {
         this.addressId = addressId;
     }
 
-    public String getPlaceId() {
-        return placeId;
+    public Place getPlaceZip() {
+        return placeZip;
     }
 
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
+    public void setPlaceZip(Place placeZip) {
+        this.placeZip = placeZip;
     }
 
     public List<Article> getArticles() {

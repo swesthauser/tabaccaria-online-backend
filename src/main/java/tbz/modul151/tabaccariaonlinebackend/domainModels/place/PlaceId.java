@@ -8,6 +8,8 @@ public class PlaceId implements Serializable {
 
     private String city;
 
+    public PlaceId(){}
+
     public PlaceId(String zip, String city) {
         this.zip = zip;
         this.city = city;
