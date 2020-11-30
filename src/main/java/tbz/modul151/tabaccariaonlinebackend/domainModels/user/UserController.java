@@ -52,12 +52,19 @@ public class UserController {
     }
 
     //PUT
-    @PutMapping("/{id}/articles/{articleId}")
+    @PutMapping("/{id}/addArticle/{articleId}")
     @PreAuthorize("hasAuthority('UPDATE_USER')")
     public @ResponseBody
-    ResponseEntity<?> addArticleToFav(@RequestBody User user, @PathVariable String id, @PathVariable String articleId){
-        userService.addArticleToFavorites(id, articleId, user);
-        return new ResponseEntity(user, HttpStatus.OK);
+    ResponseEntity<User> addArticleToFav(@RequestBody User user, @PathVariable String id, @PathVariable String articleId){
+        return new ResponseEntity<User>(userService.addArticleToFavorites(id, articleId, user), HttpStatus.OK);
+    }
+
+    //PUT
+    @PutMapping("/{id}/removeArticle/{articleId}")
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
+    public @ResponseBody
+    ResponseEntity<User> removeArticleFromFav(@RequestBody User user, @PathVariable String id, @PathVariable String articleId){
+        return new ResponseEntity<User>(userService.removeArticleFromFavorites(id, articleId, user), HttpStatus.OK);
     }
 
     //DELETE

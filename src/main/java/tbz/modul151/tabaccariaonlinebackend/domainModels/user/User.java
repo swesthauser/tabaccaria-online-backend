@@ -83,7 +83,6 @@ public class User {
     )
     private Set<Role> roles;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "users_articles",

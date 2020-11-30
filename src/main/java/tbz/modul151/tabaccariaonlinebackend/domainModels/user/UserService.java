@@ -13,5 +13,6 @@ public interface UserService extends UserDetailsService {
     public User updateUser (User user, String id);
     public User deleteUser(String id);
     public User findByEmail(String email);
-    public void addArticleToFavorites(String userId, String articleId, User userToUpdate);
+    public User addArticleToFavorites(String userId, String articleId, User userToUpdate);
+    public User removeArticleFromFavorites(String userId, String articleId, User userToUpdate);
 }

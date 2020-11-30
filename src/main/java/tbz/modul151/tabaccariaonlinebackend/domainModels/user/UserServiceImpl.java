@@ -68,16 +68,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addArticleToFavorites(String userId, String articleId, User userToUpdate) {
+    public User addArticleToFavorites(String userId, String articleId, User userToUpdate) {
         Optional<Article> articleToAdd = articleRepository.findById(articleId);
         Optional<User> optionalUser = userRepository.findById(userToUpdate.getId());
         if(articleToAdd != null && optionalUser != null){
             optionalUser.get().getArticles().add(articleToAdd.get());
             List<Article> newList = optionalUser.get().getArticles().stream().distinct().collect(Collectors.toList());
             optionalUser.get().setArticles(newList);
-            updateUser(optionalUser.get(), userId);
-        }
+            return updateUser(optionalUser.get(), userId);
+        } else throw new NoSuchElementException("Article or User don't exist");
+    }
 
+    public User removeArticleFromFavorites(String userId, String articleId, User userToUpdate) {
+        Optional<Article> articleToRemove = articleRepository.findById(articleId);
+        Optional<User> user = userRepository.findById(userToUpdate.getId());
+        if (articleToRemove != null && user != null) {
+            List<Article> currentFavorites = user.get().getArticles().stream().distinct().collect(Collectors.toList());
+             if (currentFavorites.remove(articleToRemove.get())) {
+                 user.get().setArticles(currentFavorites);
+                 return updateUser(user.get(), userId);
+             } else throw new NoSuchElementException("Article hasn't been able to be removed");
+        } else throw new NoSuchElementException("Article or User don't exist");
     }
 
     private User findAllThrow (Optional<User> optional) throws NoSuchElementException {
