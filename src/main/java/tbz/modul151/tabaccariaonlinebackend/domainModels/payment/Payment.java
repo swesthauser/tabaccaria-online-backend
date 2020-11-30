@@ -31,8 +31,8 @@ public class Payment {
     //@JsonManagedReference(value="payment-order")
     //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="payment")
 
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private String orderId;
+    @OneToOne(mappedBy = "payment")  //@JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 
     public Payment (){}
 
@@ -60,11 +60,4 @@ public class Payment {
         isAllowed = allowed;
     }
 
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
 }
