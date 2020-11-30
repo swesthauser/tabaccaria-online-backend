@@ -64,20 +64,33 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order getShoppingCartByUserId(String userId) {
+        Order notConfirmedOrder= this.findByOrderDateIsNullAndUserId(userId);
+        if (notConfirmedOrder != null){
+            return findAllThrow(orderRepository.findById(notConfirmedOrder.getId()));
+        } else
+         orderRepository.save(new Order(userId, "XLSKDSJTESTCODE"));
         return orderRepository.findByOrderDateIsNullAndUserId(userId);
     }
 
     @Override
-    public Order confirmeOrder(Order order, String id) {
+    public Order confirmOrder(Order order, String id) {
         findAllThrow(orderRepository.findById(id));
-        order.setOrderDate(LocalDate.now());
-        order.setId(id);
-        return orderRepository.save(order);
+        if(order.getPayment().getAllowed()){
+            order.setOrderDate(LocalDate.now());
+            order.setId(id);
+            return orderRepository.save(order);
+        }
+        return null;
     }
 
     @Override
     public List<Order> getAllOrdersByUserId(String userId) {
         return orderRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Order findByOrderDateIsNullAndUserId(String id) {
+        return orderRepository.findByOrderDateIsNullAndUserId(id);
     }
 
     /*

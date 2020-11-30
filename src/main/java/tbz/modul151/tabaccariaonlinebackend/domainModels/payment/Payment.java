@@ -28,9 +28,11 @@ public class Payment {
     private Boolean isAllowed;
 
     // das ish komisch
-    @JsonManagedReference(value="payment-order")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="payment")
-    private Set<Order> orders;
+    //@JsonManagedReference(value="payment-order")
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="payment")
+
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private String orderId;
 
     public Payment (){}
 
@@ -58,11 +60,11 @@ public class Payment {
         isAllowed = allowed;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

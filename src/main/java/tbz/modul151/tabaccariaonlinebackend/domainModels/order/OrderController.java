@@ -73,7 +73,7 @@ public class OrderController {
     @PreAuthorize("hasAuthority('UPDATE_ORDER')")
     public @ResponseBody
     ResponseEntity<Order> closeOrder(@RequestBody Order order, @PathVariable String id){
-        return new ResponseEntity<Order>(orderService.confirmeOrder(order, id), HttpStatus.OK);
+        return new ResponseEntity<Order>(orderService.confirmOrder(order, id), HttpStatus.OK);
     }
 
     //DELETE

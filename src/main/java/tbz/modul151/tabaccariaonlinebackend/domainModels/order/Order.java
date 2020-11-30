@@ -31,8 +31,8 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private String userId;
 
-    @JsonBackReference(value="payment-order")
-    @ManyToOne
+    //@JsonBackReference(value="order-payment")
+    @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 
@@ -68,6 +68,11 @@ public class Order {
     private Set<OrderDetails> orderDetailsSet;
 
      */
+    public Order(String userId, String orderNumber){
+        this.userId = userId;
+        this.orderNumber = orderNumber;
+        this.timestamp = LocalDate.now();
+    }
 
     public Order(){
         this.timestamp = LocalDate.now();

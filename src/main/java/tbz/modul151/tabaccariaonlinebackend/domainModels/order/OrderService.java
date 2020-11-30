@@ -12,8 +12,9 @@ public interface OrderService {
     public Order updateOrder (Order order, String id);
     public Order deleteOrder(String id);
     public Order getShoppingCartByUserId(String userId);
-    public Order confirmeOrder(Order order, String id);
+    public Order confirmOrder(Order order, String id);
     public List<Order> getAllOrdersByUserId(String userId);
+    public Order findByOrderDateIsNullAndUserId(String id);
    // public List<OrderDetails> getAllOrderDetails(String orderId);
 
 }
