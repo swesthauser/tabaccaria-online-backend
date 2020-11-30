@@ -45,6 +45,22 @@ public class OrderDetailsController {
         return new ResponseEntity<>(orderDetailsService.getAllByOrder(orderId), HttpStatus.OK);
     }
 
+    //Count and sort
+    @GetMapping("/statistic")
+    @PreAuthorize("hasAuthority('RETRIEVE_ORDER_DETAILS')")
+    public @ResponseBody
+    ResponseEntity<List<String>>getStatistic(){
+        return new ResponseEntity<>(orderDetailsService.funcCountAndGroupAllByArticle(), HttpStatus.OK);
+    }
+
+    //Count and sort
+    @GetMapping("/count/{articleId}")
+    @PreAuthorize("hasAuthority('RETRIEVE_ORDER_DETAILS')")
+    public @ResponseBody
+    ResponseEntity<Integer>procedureCountAllByArticleId(@PathVariable String articleId){
+        return new ResponseEntity<>(orderDetailsService.procedureCountAllByArticleId(articleId), HttpStatus.OK);
+    }
+
     //POST
     @PostMapping("")
     @PreAuthorize("hasAuthority('CREATE_ORDER_DETAILS')")

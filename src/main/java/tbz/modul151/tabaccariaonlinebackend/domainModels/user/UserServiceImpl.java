@@ -5,8 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.address.Address;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.address.AddressRepository;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.Article;
 import tbz.modul151.tabaccariaonlinebackend.domainModels.article.ArticleRepository;
+import tbz.modul151.tabaccariaonlinebackend.domainModels.place.PlaceRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,12 +22,18 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserRepository userRepository;
     private ArticleRepository articleRepository;
+    private PlaceRepository placeRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, ArticleRepository articleRepository) {
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository,
+                           ArticleRepository articleRepository, PlaceRepository placeRepository,
+                           AddressRepository addressRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.articleRepository = articleRepository;
+        this.placeRepository = placeRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -41,6 +50,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+       if(!placeRepository.findByZipAndCity(user.getZipPlace().getZip(), user.getZipPlace().getCity()).isPresent()){
+           placeRepository.save(user.getZipPlace());
+        }
+       if(!addressRepository.findById(user.getAddressId()).isPresent()){
+           addressRepository.save(new Address(user.getAddressId()));
+       }
         userRepository.save(user);
         return user;
     }
@@ -50,6 +65,12 @@ public class UserServiceImpl implements UserService {
         User oldUser = findAllThrow(userRepository.findById(id));
         if(!oldUser.getPassword().equals(user.getPassword())){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        if(!placeRepository.findByZipAndCity(user.getZipPlace().getZip(), user.getZipPlace().getCity()).isPresent()){
+            placeRepository.save(user.getZipPlace());
+        }
+        if(!addressRepository.findById(user.getAddressId()).isPresent()){
+            addressRepository.save(new Address(user.getAddressId()));
         }
         user.setId(id);
         userRepository.save(user);
@@ -68,16 +89,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addArticleToFavorites(String userId, String articleId, User userToUpdate) {
+    public User addArticleToFavorites(String userId, String articleId, User userToUpdate) {
         Optional<Article> articleToAdd = articleRepository.findById(articleId);
         Optional<User> optionalUser = userRepository.findById(userToUpdate.getId());
         if(articleToAdd != null && optionalUser != null){
             optionalUser.get().getArticles().add(articleToAdd.get());
             List<Article> newList = optionalUser.get().getArticles().stream().distinct().collect(Collectors.toList());
             optionalUser.get().setArticles(newList);
-            updateUser(optionalUser.get(), userId);
-        }
+          return updateUser(optionalUser.get(), userId);
+        }else throw new NoSuchElementException("Article or User don't exist");
+    }
 
+    @Override
+    public User removeArticleFromFavorites(String userId, String articleId, User userToUpdate) {
+        Optional<Article> articleToRemove = articleRepository.findById(articleId);
+        Optional<User> user = userRepository.findById(userToUpdate.getId());
+        if (articleToRemove != null && user != null) {
+            List<Article> currentFavorites = user.get().getArticles().stream().distinct().collect(Collectors.toList());
+            if (currentFavorites.remove(articleToRemove.get())) {
+                user.get().setArticles(currentFavorites);
+                return updateUser(user.get(), userId);
+            } else throw new NoSuchElementException("Article hasn't been able to be removed");
+        } else throw new NoSuchElementException("Article or User don't exist");
     }
 
     private User findAllThrow (Optional<User> optional) throws NoSuchElementException {

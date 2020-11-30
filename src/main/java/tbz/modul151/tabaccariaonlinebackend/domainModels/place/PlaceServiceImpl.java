@@ -31,13 +31,12 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public Place getById(String id) {
-        return findAllThrow(placeRepository.findById(id));
-    }
-
-    @Override
-    public Place updateById(String id, Place objToUpdate) {
-        return null;
+    public Place updateById(String zip, String city, Place objToUpdate) {
+        Place oldplace = findAllThrow(placeRepository.findByZipAndCity(zip, city));
+        oldplace.setZip(objToUpdate.getZip());
+        oldplace.setCity(objToUpdate.getCity());
+        placeRepository.save(objToUpdate);
+        return objToUpdate;
     }
 
     @Override
@@ -46,8 +45,18 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public Place delete(String id) {
-        placeRepository.deleteById(id);
+    public Place delete(String zip, String city) {
+        placeRepository.deleteById(new PlaceId(zip, city));
         return null;
+    }
+
+    @Override
+    public Place findByZipAndCity(String zip, String city) {
+        return findAllThrow(placeRepository.findByZipAndCity(zip, city));
+    }
+
+    @Override
+    public Place findById(String zip, String city) {
+        return findAllThrow(placeRepository.findById(new PlaceId(zip, city)));
     }
 }

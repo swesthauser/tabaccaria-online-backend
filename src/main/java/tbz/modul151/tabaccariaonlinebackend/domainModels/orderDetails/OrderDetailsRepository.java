@@ -1,5 +1,6 @@
 package tbz.modul151.tabaccariaonlinebackend.domainModels.orderDetails;
 
+import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -14,10 +15,19 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Stri
     List<OrderDetails> getAllByOrder(Order order);
 
     @Procedure(procedureName = "COUNT_ALL_ORDERS_DETAILS_BY_ARTICLE_ID")
-    int countAllByArticleId(String articleId);
+    Integer countAllByArticleId(String articleId);
 
     @Procedure(procedureName = "COUNT_ALL_BY_ARTICLE_ID_AND_USER_ID")
     int countAllByArticleIdAndOrder_UserId(String articleId, String userId);
+
+    // @Query("SELECT public.countandgroupallbyarticles()")
+    // List<String> countAndGroupAllByArticles();
+
+    @Query(nativeQuery = true, value = "SELECT public.countandgroupallbyarticles()")
+    List<String> funcCountAndGroupAllByArticle();
+
+    //@Procedure(value = "SELECT public.countandgroupallbyarticles()")
+    //List<String> funcCountAndGroupAllByArticle();
 
     /*
     @Query(value = "SELECT COUNT(public.order_details.article_id) as amount, public.article.article_name FROM public.order_details \n" +
@@ -27,3 +37,4 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Stri
      */
 
 }
+

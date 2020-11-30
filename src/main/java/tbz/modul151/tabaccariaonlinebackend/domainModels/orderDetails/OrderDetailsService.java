@@ -13,4 +13,6 @@ public interface OrderDetailsService {
     public OrderDetails deleteOrderDetails(String id);
     public void addDetailsToOrder(OrderDetails orderDetails);
     public List<OrderDetails> getAllByOrder(String id);
+    public List<String> funcCountAndGroupAllByArticle();
+    public Integer procedureCountAllByArticleId(String articleId);
 }

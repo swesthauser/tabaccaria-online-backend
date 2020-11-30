@@ -69,7 +69,7 @@ public class OrderController {
     }
 
     //PUT
-    @PutMapping("/confirme/{id}")
+    @PutMapping("/confirm/{id}")
     @PreAuthorize("hasAuthority('UPDATE_ORDER')")
     public @ResponseBody
     ResponseEntity<Order> closeOrder(@RequestBody Order order, @PathVariable String id){

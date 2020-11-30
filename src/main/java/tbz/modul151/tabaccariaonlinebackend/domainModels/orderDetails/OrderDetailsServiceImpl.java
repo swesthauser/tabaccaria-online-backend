@@ -86,4 +86,14 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
         return orderDetailsRepository.getAllByOrder(order.get());
     }
 
+    @Override
+    public List<String> funcCountAndGroupAllByArticle() {
+        return orderDetailsRepository.funcCountAndGroupAllByArticle();
+    }
+
+    @Override
+    public Integer procedureCountAllByArticleId(String articleId) {
+        return orderDetailsRepository.countAllByArticleId(articleId);
+    }
+
 }

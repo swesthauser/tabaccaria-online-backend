@@ -72,7 +72,7 @@ public class User {
                     name = "city",
                     referencedColumnName = "city")
     })
-    private Place placeZip;
+    private Place zipPlace;
 
     @JsonIgnore
     @ManyToMany
@@ -205,12 +205,12 @@ public class User {
         this.addressId = addressId;
     }
 
-    public Place getPlaceZip() {
-        return placeZip;
+    public Place getZipPlace() {
+        return zipPlace;
     }
 
-    public void setPlaceZip(Place placeZip) {
-        this.placeZip = placeZip;
+    public void setZipPlace(Place zipPlace) {
+        this.zipPlace = zipPlace;
     }
 
     public List<Article> getArticles() {

@@ -5,8 +5,9 @@ import java.util.List;
 public interface PlaceService {
 
     public List<Place> getAll();
-    public Place getById (String id);
-    public Place updateById(String id, Place objToUpdate);
+    public Place updateById(String zip, String city, Place objToUpdate);
     public Place create (Place object);
-    public Place delete (String id);
+    public Place delete (String zip, String city);
+    public Place findByZipAndCity(String zip, String city);
+    public Place findById(String zip, String city);
 }

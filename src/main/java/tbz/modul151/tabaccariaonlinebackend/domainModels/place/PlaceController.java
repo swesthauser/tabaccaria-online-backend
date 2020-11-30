@@ -28,11 +28,19 @@ public class PlaceController {
     }
 
     //GET by id
-    @GetMapping("/{id}")
+    @GetMapping("/id/{zip}/{city}")
     @PreAuthorize("hasAuthority('RETRIEVE_PLACE')")
     public @ResponseBody
-    ResponseEntity<Place> getById(@PathVariable String id){
-        return new ResponseEntity<>(placeService.getById(id), HttpStatus.OK);
+    ResponseEntity<Place> getById(@PathVariable String zip, @PathVariable String city){
+        return new ResponseEntity<>(placeService.findById(zip, city), HttpStatus.OK);
+    }
+
+    //GET by id findByZipAndCity
+    @GetMapping("/{zip}/{city}")
+    @PreAuthorize("hasAuthority('RETRIEVE_PLACE')")
+    public @ResponseBody
+    ResponseEntity<Place> getByZipAndCity(@PathVariable String zip, @PathVariable String city){
+        return new ResponseEntity<>(placeService.findByZipAndCity(zip, city), HttpStatus.OK);
     }
 
     //POST
@@ -44,18 +52,18 @@ public class PlaceController {
     }
 
     //PUT
-    @PutMapping("/{id}")
+    @PutMapping("/{zip}/{city}")
     @PreAuthorize("hasAuthority('UPDATE_PLACE')")
     public @ResponseBody
-    ResponseEntity<Place> update(@RequestBody Place objectToUpdate, @PathVariable String id){
-        return new ResponseEntity<>(placeService.updateById(id, objectToUpdate), HttpStatus.OK);
+    ResponseEntity<Place> update(@RequestBody Place objectToUpdate, @PathVariable String zip, @PathVariable String city){
+        return new ResponseEntity<>(placeService.updateById(zip, city, objectToUpdate), HttpStatus.OK);
     }
 
     //DELETE
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{zip}/{city}")
     @PreAuthorize("hasAuthority('DELETE_PLACE')")
     public @ResponseBody
-    ResponseEntity<Place> delete(@PathVariable String id){
-        return new ResponseEntity<>(placeService.delete(id), HttpStatus.NO_CONTENT);
+    ResponseEntity<Place> delete(@PathVariable String zip, @PathVariable String city){
+        return new ResponseEntity<>(placeService.delete(zip, city), HttpStatus.NO_CONTENT);
     }
 }
